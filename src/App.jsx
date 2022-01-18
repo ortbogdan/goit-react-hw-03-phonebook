@@ -13,12 +13,14 @@ export class App extends Component {
     filter: '',
   };
   componentDidMount() {
-   
-  }
-  componentDidUpdate() {
     const savedContacts = localStorage.getItem(KEY);
-    if (!savedContacts) {
-
+    if (savedContacts) {
+      this.setState({contacts: JSON.parse(savedContacts)})
+    }
+  }
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem(KEY, JSON.stringify(this.state.contacts))
     }
   }
   generateId = () => nanoid();
